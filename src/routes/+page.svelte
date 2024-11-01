@@ -13,7 +13,7 @@
 
       	data = await response.json(); // разбираем JSON-ответ
 
-	  	console.log(data);
+	  	console.log(data[0].test_field1);
     } catch (err) {
 		error = (err as Error).message; // приведение типа к Error
     }
@@ -41,7 +41,7 @@
 			style:border = 'solid #d2d2d2 1px'
 			style:background-color = #fafafa
 		>
-			{data}
+			{data[0].test_field1}
 		</div>
 	</div>
 </ThemeProvider>
