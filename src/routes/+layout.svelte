@@ -3,7 +3,7 @@
 </script>
 
 <div class="app">
-	<p>Hello, Vercel</p>
+	<p>Hello, Vercel 2</p>
 	<main>
 		{@render children()}
 	</main>
