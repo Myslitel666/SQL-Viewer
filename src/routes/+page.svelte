@@ -3,11 +3,14 @@
 
 	import { onMount } from 'svelte';
 
-	let data = '';
+	console.log('data: ' + process.env.DATABASE_URL);
+
+	let data = [];
 	let error;
 
 	onMount(async () => {
     try {
+
       const response = await fetch('/api/data'); // вызываем API эндпоинт
       if (!response.ok) throw new Error(`Ошибка загрузки данных: ${response.statusText}`);
 

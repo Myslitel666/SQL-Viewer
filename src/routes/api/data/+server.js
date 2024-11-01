@@ -1,18 +1,19 @@
 // src/routes/api/data/+server.js
-import { Pool } from 'pg';
+import pkg from 'pg';
+const { Pool } = pkg;
 
 export async function GET() {
     // Настраиваем пул соединений, используя DATABASE_URL
     const pool = new Pool({
         connectionString: process.env.DATABASE_URL,
         ssl: {
-            rejectUnauthorized: false, // Эта опция может потребоваться для Vercel или других хостинг-платформ
+            rejectUnauthorized: false, // Включите это для Vercel, если требуется
         },
     });
 
     try {
         // Выполняем запрос к базе данных
-        const result = await pool.query('SELECT * FROM TEST_TABLE'); // Замените "your_table_name" на название вашей таблицы
+        const result = await pool.query('SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\';');
         
         // Возвращаем результат в формате JSON
         return new Response(JSON.stringify(result.rows), {
