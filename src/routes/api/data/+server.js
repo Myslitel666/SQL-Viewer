@@ -13,7 +13,7 @@ export async function GET() {
 
     try {
         // Выполняем запрос к базе данных
-        const result = await pool.query('SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\';');
+        const result = await pool.query('SELECT * FROM test_table;');
         
         // Возвращаем результат в формате JSON
         return new Response(JSON.stringify(result.rows), {
