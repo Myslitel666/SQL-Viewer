@@ -42,7 +42,13 @@
 			style:border = 'solid #d2d2d2 1px'
 			style:background-color = #fafafa
 		>
-			{data[0]}
+			{#each data as item}
+				<li>
+				<strong>ID:</strong> {item.id} <br />
+				<strong>Test Field 1:</strong> {item.test_field1} <br />
+				<strong>Test Field 2:</strong> {item.test_field2}
+				</li>
+			{/each}
 		</div>
 	</div>
 </ThemeProvider>
