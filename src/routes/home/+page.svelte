@@ -6,12 +6,15 @@
 
     import { onMount } from 'svelte';
     let databaseName = '';
-    let tablesList = []
+    let tablesList = [];
+    let columnsList = '';
+
+    let selectedTable = 'test_table2';
 
     onMount(async () => {
         databaseName = await getDbName();
-
         tablesList = await getTablesList();
+        columnsList = await getColumnsList();
     });
 
     async function getDbName() {
@@ -27,6 +30,18 @@
 
         return data;
     };
+
+    async function getColumnsList() {
+        const response = await fetch(`/api/home/getColumnsList?table=${selectedTable}`);
+        const data = await response.json();
+
+        return data;
+    };
+
+    async function handleTableClick(tableName) {
+        selectedTable = tableName;
+        columnsList = await getColumnsList();
+    }
 	//Styles
 	let primary = '#5bb056';
 	let lg = 'en';
@@ -61,32 +76,64 @@
 		</div>
 	</div>
     <div class = "content">
-        <div 
-            style:display=flex
-            style:align-items=center
-        >
-            <Database/><p>{databaseName}</p>
-        </div>
-        {#each tablesList as tableName}
-            <div
+        <div class = 'menu'>
+            <div 
                 style:display=flex
                 style:align-items=center
-                style:margin-left=3rem
-                style:margin-top=0.5rem
             >
-                <Table /> <!-- Передаем название таблицы в компонент -->
-                <p
-                    style:margin-left=0.5rem
-                >
-                    {tableName.table_name}
-                </p>
+                <Database/><p>{databaseName}</p>
             </div>
-        {/each}
+            {#each tablesList as tableName}
+                <button
+                    style:display=flex
+                    style:align-items=center
+                    style:margin-left=3rem
+                    style:margin-top=0.5rem
+                    onclick = {() => {
+                        handleTableClick(tableName.table_name);
+                    }}
+                >
+                    <Table /> <!-- Передаем название таблицы в компонент -->
+                    <p
+                        style:margin-left=0.5rem
+                        style:font-weight={tableName.table_name === selectedTable ? 600 : 400}
+                    >
+                        {tableName.table_name}
+                    </p>
+                </button>
+            {/each}
+        </div>
+        <div
+            class = 'table'
+            style:margin-left = 1rem
+            style:width = 100%
+            style:height = 5rem
+            style:background-color = #f7f7f7
+        >
+        <div 
+            style:display=flex
+            style:justify-content=center
+            style:border-radius=2rem
+        >
+            {#each columnsList as columnName}
+                <div
+                    style:margin-top=0.5rem
+                >
+                    <span
+                        style:margin-left=0.5rem
+                    >
+                        {columnName.column_name}
+                    </span>
+                </div>
+            {/each}
+        </div>
+        </div>
     </div>
 </ThemeProvider>
 
 <style>
     .content {
+        display: flex;
         padding-left: 4rem;
         padding-right: 4rem;
     }

@@ -7,6 +7,5 @@ export async function GET() {
     return new Response(JSON.stringify({ database: dbName }), {
         headers: { 'Content-Type': 'application/json' },
         status: 200,
-        
     });
 }
