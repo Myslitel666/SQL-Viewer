@@ -23,7 +23,10 @@
 		Getting Started
 	</p>
 	<p class = 'text'>
-		Welcome to SQL Viewer — the powerful tool designed for easy interaction with databases. SQL Viewer is aimed at simplifying the processes of reading, editing, and deleting records in a database, providing users with an intuitive interface and quick access to data.
+		Welcome to SQL Viewer — the powerful tool designed for easy interaction with databases.
+	</p>
+	<p class = 'text'>
+		SQL Viewer is aimed at simplifying the processes of reading, editing, and deleting records in a database, providing users with an intuitive interface and quick access to data.
 	</p>
 	<p 
 		class = 'title'
@@ -32,12 +35,44 @@
 		Key Features
 	</p>
 	<ul class = 'list'>
-		<li>Data Reading: Easily view all records in your tables. Access important information with just a few clicks.</li>
+		<li>Data Reading: Easily view all records in your tables. Access important information with just a few clicks;</li>
 
-		<li>Record Editing: Modify existing data without diving into SQL queries. Select the desired record, make changes, and save them with the click of a button.</li>
+		<li>Record Editing: Modify existing data without diving into SQL queries. Select the desired record, make changes, and save them with the click of a button;</li>
 		
 		<li>Data Deletion: Remove unnecessary records from your tables, eliminating clutter in your database while using an intuitive interface.</li>
 	</ul>
+	<p 
+		class = 'title'
+		style:color = {primary}
+	>
+		PostgreSQL Support
+	</p>
+	<p class = 'text'>
+		Currently, SQL Viewer only supports PostgreSQL databases, ensuring reliable and secure interaction with this database management system. We plan to expand functionality and support other DBMSs in the future.
+	</p>
+	<p 
+		class = 'title'
+		style:color = {primary}
+	>
+		Why Use SQL Viewer?
+	</p>
+	<p class = 'text'>
+		Not all cloud platforms and hosting services provide an interface for data management. Usually, you have to rely on third-party libraries and utilities for these tasks. Additionally, there are still few universal tools in SQL programming that allow interaction with various DBMSs through a single interface.
+	</p>
+	<p class = 'text'>
+		With SQL Viewer, you can:
+	</p>
+	<ul class = 'list'>
+		<li>Simplify data handling without the need for additional libraries;</li>
+		<li>Record Editing: Modify existing data without diving into SQL queries. Select the desired record, make changes, and save them with the click of a button;</li>
+		<li>Data Deletion: Remove unnecessary records from your tables, eliminating clutter in your database while using an intuitive interface.</li>
+	</ul>
+	<p class = 'text'>
+		We hope that SQL Viewer becomes your indispensable assistant in the world of databases. If you have any suggestions or ideas for improvement, feel free to reach out to us!
+	</p>
+	<p class = 'text'>
+		Start right now and discover the convenience of working with databases!
+	</p>
 </ThemeProvider>
 
 <style>
