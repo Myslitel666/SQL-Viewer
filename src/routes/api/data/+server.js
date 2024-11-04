@@ -6,9 +6,10 @@ export async function GET() {
     // Настраиваем пул соединений, используя DATABASE_URL
     const pool = new Pool({
         connectionString: process.env.DATABASE_URL,
-        ssl: {
-            rejectUnauthorized: false, // Включите это для Vercel, если требуется
-        },
+        ssl: false
+        // ssl: {
+        //     rejectUnauthorized: false, // Включите это для Vercel, если требуется
+        // },
     });
 
     try {
