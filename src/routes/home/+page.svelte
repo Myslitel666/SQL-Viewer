@@ -9,11 +9,12 @@
     let tablesList = [];
     let columnsList = '';
 
-    let selectedTable = 'test_table2';
+    let selectedTable = '';
 
     onMount(async () => {
         databaseName = await getDbName();
         tablesList = await getTablesList();
+        selectedTable = tablesList.length > 0 ? tablesList[0].table_name : '';
         columnsList = await getColumnsList();
     });
 
