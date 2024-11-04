@@ -14,7 +14,7 @@ export async function GET() {
 
     try {
         // Выполняем запрос к базе данных
-        const result = await pool.query('SELECT * FROM test_table;');
+        const result = await pool.query('SELECT current_database();');
         
         // Возвращаем результат в формате JSON
         return new Response(JSON.stringify(result.rows), {

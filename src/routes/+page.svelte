@@ -1,6 +1,6 @@
 <script lang='ts'>
 	import { ThemeProvider } from "svelte-elegant";
-	import AutoComplete from "./AutoComplete.svelte";
+	import AutoComplete from "../components/AutoComplete.svelte";
 
 	//Styles
 	let primary = '#5bb056';
@@ -9,14 +9,19 @@
 
 <ThemeProvider>
 	<div class = 'header'>
-		<button>
-			<img src = './USD-Coin-Logo-PNG-Color.png' class = 'logo'>
-			<p class = 'logo-p'>
-				<span style:color={primary}>
-					SQL Viewer
-				</span> 
-			</p>
-		</button>
+		<a 
+			href = '/home'
+			style:text-decoration = none
+		>
+			<button>
+				<img src = './USD-Coin-Logo-PNG-Color.png' class = 'logo'>
+				<p class = 'logo-p'>
+					<span style:color={primary}>
+						SQL Viewer
+					</span> 
+				</p>
+			</button>
+		</a>
 		<div 
 			style:display=flex
 			style:align-items = center
