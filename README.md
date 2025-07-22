@@ -1,7 +1,3 @@
-## Шрифт и иконки
-
-Шрифт и иконки предоставляет библиотека Svelte Elegant https://github.com/Myslitel666/Svelte-Elegant (MIT)
-
 # sv
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
