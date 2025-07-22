@@ -165,6 +165,7 @@
     height: 4rem;
     display: flex;
     align-items: center; /* Центрирует по вертикали */
+    padding-right: 0.5rem;
   }
 
   .logo {
