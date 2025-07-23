@@ -1,7 +1,6 @@
 <script>
   import { ThemeProvider } from "svelte-elegant";
   import AutoComplete from "../components/AutoComplete.svelte";
-
   //Styles
   let primary = "#5bb056";
   let lg = "en";
@@ -11,7 +10,7 @@
   <div class="header">
     <a href="/home" style:text-decoration="none">
       <button>
-        <img src="./USD-Coin-Logo-PNG-Color.png" class="logo" />
+        <img src="./USD-Coin-Logo-PNG-Color.png" class="logo" alt="logo" />
         <p class="logo-p">
           <span style:color={primary}> SQL Viewer </span>
         </p>

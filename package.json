@@ -1,6 +1,5 @@
 {
 	"name": "sql-viewer",
-	"private": true,
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
@@ -21,6 +20,7 @@
 		"vite": "^7.0.4"
 	},
 	"dependencies": {
+		"dotenv": "^17.2.0",
 		"pg": "^8.16.3",
 		"svelte-elegant": "^1.1.2"
 	}
