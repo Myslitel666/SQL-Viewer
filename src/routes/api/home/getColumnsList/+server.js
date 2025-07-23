@@ -16,3 +16,4 @@ export async function GET({ url }) {
         status: 200,
     });
 }
+
