@@ -9,12 +9,24 @@
   let tablesList = [{ table_name: "" }];
   let columnsList = [{}];
   let columns = [{}];
+  let ignoreTables = [
+    "spatial_ref_sys",
+    "geography_columns",
+    "geometry_columns",
+    "pg_stat_statements_info",
+    "raster_columns",
+    "pg_stat_statements",
+  ];
 
   let selectedTable = "";
 
   onMount(async () => {
     databaseName = await getDbName();
     tablesList = await getTablesList();
+    //Удаляем таблицы ЧС
+    tablesList = tablesList.filter(
+      (table) => !ignoreTables.includes(table.table_name)
+    );
     selectedTable = tablesList.length > 0 ? tablesList[0].table_name : "";
     columnsList = await getColumnsList();
     // Преобразуем в нужный формат
@@ -57,7 +69,7 @@
     columns = columnsList.map((col) => ({
       field: col.column_name,
       header: formatHeader(col.column_name), // Функция для форматирования заголовка
-      width: "10rem", // Можно настроить индивидуально
+      width: "7.5rem", // Можно настроить индивидуально
     }));
   }
 
