@@ -1,5 +1,5 @@
 <script>
-  import { ThemeProvider } from "svelte-elegant";
+  import { ThemeProvider, DataGrid } from "svelte-elegant";
   import AutoComplete from "../../components/AutoComplete.svelte";
   import Database from "svelte-elegant/icons-elegant/Database";
   import { Notepad } from "svelte-elegant/icons-elegant";
@@ -7,7 +7,8 @@
   import { onMount } from "svelte";
   let databaseName = "";
   let tablesList = [{ table_name: "" }];
-  let columnsList = "";
+  let columnsList = [{}];
+  let columns = [{}];
 
   let selectedTable = "";
 
@@ -16,7 +17,17 @@
     tablesList = await getTablesList();
     selectedTable = tablesList.length > 0 ? tablesList[0].table_name : "";
     columnsList = await getColumnsList();
+    // Преобразуем в нужный формат
+    columnsListToColumns();
   });
+
+  // Функция для форматирования названий колонок (например, "user_name" → "User Name")
+  function formatHeader(columnName) {
+    return columnName
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
 
   async function getDbName() {
     const response = await fetch("/api/home/getDatabaseName");
@@ -41,9 +52,20 @@
     return data;
   }
 
+  function columnsListToColumns() {
+    // Преобразуем в нужный формат
+    columns = columnsList.map((col) => ({
+      field: col.column_name,
+      header: formatHeader(col.column_name), // Функция для форматирования заголовка
+      width: "10rem", // Можно настроить индивидуально
+    }));
+  }
+
   async function handleTableClick(tableName) {
     selectedTable = tableName;
     columnsList = await getColumnsList();
+
+    columnsListToColumns();
   }
   //Styles
   let primary = "#5bb056";
@@ -105,20 +127,13 @@
       style:margin-left="1rem"
       style:width="100%"
       style:height="5rem"
-      style:background-color="#f7f7f7"
     >
       <div
         style:display="flex"
         style:justify-content="center"
         style:border-radius="2rem"
       >
-        {#each columnsList as columnName}
-          <div style:margin-top="0.5rem">
-            <span style:margin-left="0.5rem">
-              {columnName.column_name}
-            </span>
-          </div>
-        {/each}
+        <DataGrid {columns} />
       </div>
     </div>
   </div>
