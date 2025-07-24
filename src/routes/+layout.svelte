@@ -1,9 +1,14 @@
-<script lang="ts">
-	let { children } = $props();
+<script>
+  import { ThemeProvider } from "svelte-elegant";
+
+  import Header from "../components/layout/Header.svelte";
 </script>
 
-<div class="app">
-	<main>
-		{@render children()}
-	</main>
-</div>
+<ThemeProvider>
+  <div class="app">
+    <main>
+      <Header />
+      <slot />
+    </main>
+  </div>
+</ThemeProvider>

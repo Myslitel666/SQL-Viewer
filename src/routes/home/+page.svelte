@@ -1,7 +1,6 @@
 <script>
-  import { ThemeProvider, DataGrid } from "svelte-elegant";
-  import AutoComplete from "../../components/AutoComplete.svelte";
-  import Database from "svelte-elegant/icons-elegant/Database";
+  import { Button, DataGrid } from "svelte-elegant";
+  import { Database, Plus } from "svelte-elegant/icons-elegant";
   import { Notepad } from "svelte-elegant/icons-elegant";
 
   import { onMount } from "svelte";
@@ -84,99 +83,59 @@
   let lg = "en";
 </script>
 
-<ThemeProvider>
-  <div class="header">
-    <a href="/home" style:text-decoration="none">
-      <button>
-        <img src="./USD-Coin-Logo-PNG-Color.png" class="logo" alt="logo" />
-        <p class="logo-p">
-          <span style:color={primary}> SQL Viewer </span>
-        </p>
-      </button>
-    </a>
+<div class="content">
+  <div class="menu">
     <div
       style:display="flex"
       style:align-items="center"
-      style:margin-left="auto"
-      style:margin-right="0.5rem"
-      style:width="5.6rem"
+      style:margin-bottom="0.5rem"
     >
-      <span style:margin-right="0.5rem">lg:</span>
-      <AutoComplete bind:selectedOption={lg} />
+      <Database size="2rem" />
+      <p>{databaseName}</p>
     </div>
-  </div>
-  <div class="content">
-    <div class="menu">
-      <div style:display="flex" style:align-items="center">
-        <Database size="2rem" />
-        <p>{databaseName}</p>
-      </div>
-      {#each tablesList as tableName}
-        <button
-          style:display="flex"
-          style:align-items="center"
-          style:margin-left="3rem"
-          style:margin-top="0.5rem"
-          onclick={() => {
-            handleTableClick(tableName.table_name);
-          }}
-        >
-          <Notepad size="2rem" />
-          <!-- Передаем название таблицы в компонент -->
-          <p
-            style:margin-left="0.5rem"
-            style:font-weight={tableName.table_name === selectedTable
-              ? 600
-              : 400}
-          >
-            {tableName.table_name}
-          </p>
-        </button>
-      {/each}
-    </div>
-    <div
-      class="table"
-      style:margin-left="1rem"
-      style:width="100%"
-      style:height="5rem"
-    >
-      <div
+    <Button width="15rem" variant="Outlined"><Plus />Create Table</Button>
+    {#each tablesList as tableName}
+      <button
         style:display="flex"
-        style:justify-content="center"
-        style:border-radius="2rem"
+        style:align-items="center"
+        style:margin-left="2rem"
+        style:margin-top="0.5rem"
+        onclick={() => {
+          handleTableClick(tableName.table_name);
+        }}
       >
-        <DataGrid {columns} />
-      </div>
+        <Notepad size="2rem" />
+        <!-- Передаем название таблицы в компонент -->
+        <p
+          style:margin-left="0.5rem"
+          style:font-weight={tableName.table_name === selectedTable ? 600 : 400}
+        >
+          {tableName.table_name}
+        </p>
+      </button>
+    {/each}
+  </div>
+  <div
+    class="table"
+    style:margin-left="1rem"
+    style:width="100%"
+    style:height="5rem"
+  >
+    <div
+      style:display="flex"
+      style:justify-content="center"
+      style:border-radius="2rem"
+    >
+      <DataGrid {columns} />
     </div>
   </div>
-</ThemeProvider>
+</div>
 
 <style>
   .content {
     display: flex;
+    margin-top: 0.5rem;
     padding-left: 4rem;
     padding-right: 4rem;
-  }
-
-  .header {
-    height: 4rem;
-    display: flex;
-    align-items: center; /* Центрирует по вертикали */
-  }
-
-  .logo {
-    margin-left: 0.5rem;
-    width: 3rem;
-    height: 3rem;
-    transition: transform 0.5s;
-  }
-
-  .logo-p {
-    margin-left: 0.5rem;
-    font-size: 26px;
-  }
-
-  .logo:hover {
-    transform: scale(1.2);
   }
 </style>

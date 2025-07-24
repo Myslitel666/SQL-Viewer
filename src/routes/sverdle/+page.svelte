@@ -1,10 +1,7 @@
 <script>
-  import { ThemeProvider } from "svelte-elegant";
-
   import { onMount } from "svelte";
 
   let data = [{ id: -1, test_field1: "", test_field2: "" }];
-  let error;
 
   onMount(async () => {
     const response = await fetch("/api/data"); // вызываем API эндпоинт
@@ -15,32 +12,27 @@
 
     console.log(data);
   });
-
-  //Styles
-  let primary = "#5bb056";
 </script>
 
-<ThemeProvider>
-  <div class="content">
-    <div
-      class="main-box"
-      style:margin-top="0.25rem"
-      style:border="solid #d2d2d2 1px"
-      style:background-color="#fafafa"
-    >
-      {#each data as item}
-        <li>
-          <strong>ID:</strong>
-          {item.id} <br />
-          <strong>Test Field 1:</strong>
-          {item.test_field1} <br />
-          <strong>Test Field 2:</strong>
-          {item.test_field2}
-        </li>
-      {/each}
-    </div>
+<div class="content">
+  <div
+    class="main-box"
+    style:margin-top="0.25rem"
+    style:border="solid #d2d2d2 1px"
+    style:background-color="#fafafa"
+  >
+    {#each data as item}
+      <li>
+        <strong>ID:</strong>
+        {item.id} <br />
+        <strong>Test Field 1:</strong>
+        {item.test_field1} <br />
+        <strong>Test Field 2:</strong>
+        {item.test_field2}
+      </li>
+    {/each}
   </div>
-</ThemeProvider>
+</div>
 
 <style>
   .content {
