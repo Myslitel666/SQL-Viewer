@@ -1,7 +1,6 @@
 <script>
   import { Button, DataGrid } from "svelte-elegant";
-  import { Database, Plus } from "svelte-elegant/icons-elegant";
-  import { Notepad } from "svelte-elegant/icons-elegant";
+  import { DatabasePro, NotebookPro, Plus } from "svelte-elegant/icons-elegant";
 
   import { onMount } from "svelte";
   let databaseName = "";
@@ -9,12 +8,12 @@
   let columnsList = [{}];
   let columns = [{}];
   let ignoreTables = [
-    "spatial_ref_sys",
-    "geography_columns",
-    "geometry_columns",
-    "pg_stat_statements_info",
-    "raster_columns",
-    "pg_stat_statements",
+    //"spatial_ref_sys",
+    //"geography_columns",
+    //"geometry_columns",
+    //"pg_stat_statements_info",
+    //"raster_columns",
+    //"pg_stat_statements",
   ];
 
   let selectedTable = "";
@@ -90,10 +89,10 @@
       style:align-items="center"
       style:margin-bottom="0.5rem"
     >
-      <Database size="2rem" />
+      <DatabasePro size="2.5rem" />
       <p>{databaseName}</p>
     </div>
-    <Button width="15rem" variant="Outlined"><Plus />Create Table</Button>
+
     {#each tablesList as tableName}
       <button
         style:display="flex"
@@ -104,7 +103,7 @@
           handleTableClick(tableName.table_name);
         }}
       >
-        <Notepad size="2rem" />
+        <NotebookPro size="2rem" />
         <!-- Передаем название таблицы в компонент -->
         <p
           style:margin-left="0.5rem"
@@ -114,6 +113,9 @@
         </p>
       </button>
     {/each}
+    <Button marginTop="0.5rem" width="15rem" variant="Outlined"
+      ><Plus />Create Table</Button
+    >
   </div>
   <div
     class="table"

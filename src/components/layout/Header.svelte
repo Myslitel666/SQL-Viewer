@@ -1,5 +1,10 @@
 <script>
-  import { AutoComplete, ColorThemeSwitch, Header } from "svelte-elegant";
+  import {
+    AutoComplete,
+    ColorThemeSwitch,
+    Header,
+    LangSelector,
+  } from "svelte-elegant";
   import { themeStore } from "svelte-elegant/stores";
   import { languageStore } from "../../stores/language";
 
@@ -29,17 +34,11 @@
     style:display="flex"
     style:align-items="center"
     style:margin-left="auto"
-    style:width="10.5rem"
-    style:position="sticky"
+    style:margin-right="1.5rem"
     style:gap="0.5rem"
   >
+    <LangSelector />
     <ColorThemeSwitch />
-    <AutoComplete
-      options={["en", "ru"]}
-      bind:value={lg}
-      label="Lang"
-      width="5rem"
-    />
   </div>
 </Header>
 
