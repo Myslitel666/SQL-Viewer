@@ -67,11 +67,12 @@
       style:margin-bottom="0.5rem"
     >
       <DatabasePro size="2.5rem" />
-      <p>{databaseName}</p>
+      <p style:font-weight="600">{databaseName}</p>
     </div>
 
     {#each tablesList as tableName}
       <button
+        style:font-size="16px"
         style:display="flex"
         style:align-items="center"
         style:margin-left="2rem"
