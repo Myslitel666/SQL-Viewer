@@ -7,24 +7,18 @@
   let tablesList = [{ table_name: "" }];
   let columnsList = [{}];
   let columns = [{}];
-  let ignoreTables = [
-    //"spatial_ref_sys",
-    //"geography_columns",
-    //"geometry_columns",
-    //"pg_stat_statements_info",
-    //"raster_columns",
-    //"pg_stat_statements",
-  ];
 
   let selectedTable = "";
   let isOpenModal = false;
 
   onMount(async () => {
     databaseName = await PostgresProvider.getDbName();
-    tablesList = await PostgresProvider.getTablesList(ignoreTables);
+    tablesList = await PostgresProvider.getTablesList(
+      PostgresProvider.ignoreTables
+    );
     //Удаляем таблицы ЧС
     tablesList = tablesList.filter(
-      (table) => !ignoreTables.includes(table.table_name)
+      (table) => !PostgresProvider.ignoreTables.includes(table.table_name)
     );
     selectedTable = tablesList.length > 0 ? tablesList[0].table_name : "";
     columnsList = await PostgresProvider.getColumnsList(selectedTable);
@@ -41,6 +35,15 @@
 
   // Класс для работы с БД
   class PostgresProvider {
+    static ignoreTables = [
+      //"spatial_ref_sys",
+      //"geography_columns",
+      //"geometry_columns",
+      //"pg_stat_statements_info",
+      //"raster_columns",
+      //"pg_stat_statements",
+    ];
+
     static async getDbName() {
       const response = await fetch("/api/home/getDatabaseName");
       return (await response.json()).database;
