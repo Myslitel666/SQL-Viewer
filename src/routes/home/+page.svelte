@@ -20,14 +20,14 @@
   let isOpenModal = false;
 
   onMount(async () => {
-    databaseName = await DatabaseService.getDbName();
-    tablesList = await DatabaseService.getTablesList(ignoreTables);
+    databaseName = await PostgresProvider.getDbName();
+    tablesList = await PostgresProvider.getTablesList(ignoreTables);
     //Удаляем таблицы ЧС
     tablesList = tablesList.filter(
       (table) => !ignoreTables.includes(table.table_name)
     );
     selectedTable = tablesList.length > 0 ? tablesList[0].table_name : "";
-    columnsList = await DatabaseService.getColumnsList(selectedTable);
+    columnsList = await PostgresProvider.getColumnsList(selectedTable);
     columnsListToColumns();
   });
 
@@ -40,7 +40,7 @@
   }
 
   // Класс для работы с БД
-  class DatabaseService {
+  class PostgresProvider {
     static async getDbName() {
       const response = await fetch("/api/home/getDatabaseName");
       return (await response.json()).database;
@@ -71,7 +71,7 @@
 
   async function handleTableClick(tableName) {
     selectedTable = tableName;
-    columnsList = await DatabaseService.getColumnsList(selectedTable);
+    columnsList = await PostgresProvider.getColumnsList(selectedTable);
 
     columnsListToColumns();
   }
