@@ -3,7 +3,6 @@
   import { DatabasePro, NotebookPro, Plus } from "svelte-elegant/icons-elegant";
 
   import { onMount } from "svelte";
-  import { themeMode } from "svelte-elegant/stores";
   let databaseName = "";
   let tablesList = [{ table_name: "" }];
   let columnsList = [{}];
@@ -21,15 +20,14 @@
   let isOpenModal = false;
 
   onMount(async () => {
-    databaseName = await getDbName();
-    tablesList = await getTablesList();
+    databaseName = await DatabaseService.getDbName();
+    tablesList = await DatabaseService.getTablesList(ignoreTables);
     //Удаляем таблицы ЧС
     tablesList = tablesList.filter(
       (table) => !ignoreTables.includes(table.table_name)
     );
     selectedTable = tablesList.length > 0 ? tablesList[0].table_name : "";
-    columnsList = await getColumnsList();
-    // Преобразуем в нужный формат
+    columnsList = await DatabaseService.getColumnsList(selectedTable);
     columnsListToColumns();
   });
 
@@ -41,27 +39,25 @@
       .join(" ");
   }
 
-  async function getDbName() {
-    const response = await fetch("/api/home/getDatabaseName");
-    const data = await response.json();
+  // Класс для работы с БД
+  class DatabaseService {
+    static async getDbName() {
+      const response = await fetch("/api/home/getDatabaseName");
+      return (await response.json()).database;
+    }
 
-    return data.database;
-  }
+    static async getTablesList(ignoreTables = []) {
+      const response = await fetch("/api/home/getTablesList");
+      const tables = await response.json();
+      return tables.filter((table) => !ignoreTables.includes(table.table_name));
+    }
 
-  async function getTablesList() {
-    const response = await fetch("/api/home/getTablesList");
-    const data = await response.json();
-
-    return data;
-  }
-
-  async function getColumnsList() {
-    const response = await fetch(
-      `/api/home/getColumnsList?table=${selectedTable}`
-    );
-    const data = await response.json();
-
-    return data;
+    static async getColumnsList(tableName) {
+      const response = await fetch(
+        `/api/home/getColumnsList?table=${tableName}`
+      );
+      return await response.json();
+    }
   }
 
   function columnsListToColumns() {
@@ -75,7 +71,7 @@
 
   async function handleTableClick(tableName) {
     selectedTable = tableName;
-    columnsList = await getColumnsList();
+    columnsList = await DatabaseService.getColumnsList(selectedTable);
 
     columnsListToColumns();
   }
