@@ -1,7 +1,7 @@
 <script>
   //Styles
   import { themeStore } from "svelte-elegant/stores";
-  import { languageStore } from "../stores/language";
+  import { languageStore } from "../lib/stores/language";
 
   let theme;
   // Подписываемся на изменения темы

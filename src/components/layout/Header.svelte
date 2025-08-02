@@ -1,12 +1,7 @@
 <script>
-  import {
-    AutoComplete,
-    ColorThemeSwitch,
-    Header,
-    LangSelector,
-  } from "svelte-elegant";
+  import { ColorThemeSwitch, Header, LangSelector } from "svelte-elegant";
   import { themeStore } from "svelte-elegant/stores";
-  import { languageStore } from "../../stores/language";
+  import { languageStore } from "$lib/stores/language";
 
   let lg = "en";
   let theme;
