@@ -3,6 +3,7 @@
   import { PostgresProvider } from "$lib/providers/PostgresProvider";
   import DatabaseExplorer from "./DatabaseExplorer.svelte";
   import * as columnsUtils from "./columnsUtils";
+  import { isMobile } from "svelte-elegant/utils";
 
   import {
     databaseName,
@@ -31,9 +32,9 @@
     $tablesList = $tablesList.filter(
       (table) => !PostgresProvider.ignoreTables.includes(table.table_name)
     );
-    $selectedTable = $tablesList.length > 0 ? $tablesList[0].table_name : "";
     columnsList = await PostgresProvider.getColumnsList($selectedTable);
     columns = columnsUtils.columnsListToColumns(columns, columnsList);
+    if (!isMobile()) $selectedTable = $tablesList[0]?.table_name || "";
   });
 </script>
 
@@ -50,10 +51,12 @@
       style:justify-content="center"
       style:border-radius="2rem"
     >
-      {#if columns.length > 0}
-        <DataGrid {columns} />
-      {:else}
-        <p>No columns to display</p>
+      {#if $selectedTable}
+        {#if columns.length > 0}
+          <DataGrid {columns} />
+        {:else}
+          <p>No columns to display</p>
+        {/if}
       {/if}
     </div>
   </div>

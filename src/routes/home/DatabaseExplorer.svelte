@@ -9,6 +9,7 @@
     selectedTable,
     databaseActions,
   } from "$lib/stores/databaseExplorerStore";
+  import { isMobile } from "svelte-elegant/utils";
 
   let isOpenModal = false;
 
@@ -40,7 +41,10 @@
       style:align-items="center"
       style:margin-left="2rem"
       style:margin-top="0.5rem"
-      on:click={() => databaseActions.loadTableColumns(table.table_name)}
+      on:click={() => {
+        databaseActions.loadTableColumns(table.table_name);
+        $selectedTable = table.table_name;
+      }}
     >
       <NotebookPro size="2rem" />
       <p
@@ -60,7 +64,7 @@
       isOpenModal = true;
     }}
   >
-    <div style:margin-top="0.25rem" style:margin-left="-0.58rem">
+    <div style:margin-top="0.25rem" style:margin-left="-0.66rem">
       <Plus />
     </div>
     Create Table

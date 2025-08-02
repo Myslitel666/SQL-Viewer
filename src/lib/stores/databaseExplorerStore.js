@@ -1,6 +1,7 @@
 // src/lib/stores/databaseStores.js
 import { writable } from 'svelte/store';
 import { PostgresProvider } from '$lib/providers/PostgresProvider';
+import { isMobile } from 'svelte-elegant/utils';
 
 // Отдельные хранилища для каждой переменной
 export const databaseName = writable('');
@@ -29,7 +30,6 @@ export const databaseActions = {
     );
     
     tablesList.set(tables);
-    selectedTable.set(tables[0]?.table_name || '');
     
     if (tables.length > 0) {
       await this.loadTableColumns(tables[0].table_name);
@@ -47,6 +47,5 @@ export const databaseActions = {
     }));
     
     columns.set(formattedColumns);
-    selectedTable.set(tableName);
   }
 };
