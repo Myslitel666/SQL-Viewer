@@ -15,6 +15,7 @@
 
   let columnsList = {};
   let columns = [];
+  let isMobileX = false;
 
   // Подписка на изменения selectedTable
   selectedTable.subscribe(async (table) => {
@@ -35,11 +36,14 @@
     columnsList = await PostgresProvider.getColumnsList($selectedTable);
     columns = columnsUtils.columnsListToColumns(columns, columnsList);
     if (!isMobile()) $selectedTable = $tablesList[0]?.table_name || "";
+    isMobileX = isMobile();
   });
 </script>
 
 <div class="content">
-  <DatabaseExplorer />
+  {#if !isMobileX || !$selectedTable}
+    <DatabaseExplorer />
+  {/if}
   <div
     class="table"
     style:margin-left="1rem"
