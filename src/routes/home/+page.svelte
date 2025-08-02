@@ -2,6 +2,7 @@
   import { DataGrid } from "svelte-elegant";
   import { PostgresProvider } from "$lib/providers/PostgresProvider";
   import DatabaseExplorer from "./DatabaseExplorer.svelte";
+  import * as columnsUtils from "./columnsUtils";
 
   import {
     databaseName,
@@ -17,20 +18,9 @@
   // Подписка на изменения selectedTable
   selectedTable.subscribe(async (table) => {
     if (table) {
-      await loadColumns(table);
+      columns = await columnsUtils.loadColumns(table);
     }
   });
-
-  async function loadColumns(tableName) {
-    try {
-      columnsList = await PostgresProvider.getColumnsList(tableName);
-      columnsListToColumns();
-    } catch (error) {
-      console.error("Error loading columns:", error);
-      columnsList = [];
-      columns = [];
-    }
-  }
 
   onMount(async () => {
     $databaseName = await PostgresProvider.getDbName();
@@ -43,25 +33,8 @@
     );
     $selectedTable = $tablesList.length > 0 ? $tablesList[0].table_name : "";
     columnsList = await PostgresProvider.getColumnsList($selectedTable);
-    columnsListToColumns();
+    columns = columnsUtils.columnsListToColumns(columns, columnsList);
   });
-
-  // Функция для форматирования названий колонок (например, "user_name" → "User Name")
-  function formatHeader(columnName) {
-    return columnName
-      .split("_")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  }
-
-  function columnsListToColumns() {
-    // Преобразуем в нужный формат
-    columns = columnsList.map((col) => ({
-      field: col.column_name,
-      header: formatHeader(col.column_name), // Функция для форматирования заголовка
-      width: "7.5rem", // Можно настроить индивидуально
-    }));
-  }
 </script>
 
 <div class="content">
