@@ -31,15 +31,17 @@
 
   <div>
     <div
+      class="datapase-pro"
       style:display="flex"
       style:align-items="center"
-      style:margin-left={xMobile ? "-2.5rem" : "0rem"}
+      style:margin-left={xMobile ? "-2.5rem" : ""}
     >
       <DatabasePro size="2.5rem" />
       <p style:font-weight="600">{$databaseName}</p>
     </div>
     {#each $tablesList as table}
       <button
+        class="table-btn"
         style:font-size="16px"
         style:display="flex"
         style:align-items="center"
@@ -52,8 +54,9 @@
       >
         <NotebookPro size="2rem" />
         <p
-          style:margin-left="0.5rem"
+          style:margin-left="0.22rem"
           style:font-weight={table.table_name === $selectedTable ? 600 : 400}
+          style:font-size="16px"
         >
           {table.table_name}
         </p>
@@ -77,6 +80,11 @@
 </div>
 
 <style>
+  @media (max-width: 750px) {
+    .datapase-pro {
+    }
+  }
+
   .menu {
     display: flex;
     flex-direction: column;

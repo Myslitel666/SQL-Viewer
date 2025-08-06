@@ -17,6 +17,8 @@
   let columns = [];
   let xMobile = false;
 
+  let xWindow;
+
   // Подписка на изменения selectedTable
   selectedTable.subscribe(async (table) => {
     if (table) {
@@ -37,15 +39,22 @@
     columns = columnsUtils.columnsListToColumns(columns, columnsList);
     if (!isMobile()) $selectedTable = $tablesList[0]?.table_name || "";
     xMobile = isMobile();
+
+    window.addEventListener("resize", updateXWindow); // При изменении высоты окна
+    async function updateXWindow() {
+      if (window.innerWidth) {
+        xWindow = window.innerWidth;
+      }
+    }
   });
 </script>
 
-<div class="content" style:padding-left="0.5rem" style:padding-right="0.5rem">
-  {#if !xMobile || !$selectedTable}
-    <DatabaseExplorer width={xMobile ? "100%" : "30%"} />
+<div class="content">
+  {#if xWindow > 750 || !$selectedTable}
+    <DatabaseExplorer width={xMobile ? "100%" : "16rem"} />
   {/if}
   {#if (xMobile && $selectedTable) || !xMobile}
-    <div class="table" style:width={xMobile ? "100%" : "70%"}>
+    <div class="table">
       <div
         style:display="flex"
         style:justify-content="center"
@@ -67,5 +76,30 @@
   .content {
     display: flex;
     margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .table {
+    width: 70%;
+    margin-left: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .table {
+      width: 62.5%;
+    }
+  }
+
+  @media (max-width: 750px) {
+    .table {
+      width: 100%;
+      margin-left: 0;
+    }
+
+    .content {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
   }
 </style>
