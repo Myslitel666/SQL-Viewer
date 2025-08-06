@@ -36,37 +36,31 @@
     columnsList = await PostgresProvider.getColumnsList($selectedTable);
     columns = columnsUtils.columnsListToColumns(columns, columnsList);
     if (!isMobile()) $selectedTable = $tablesList[0]?.table_name || "";
-    //Paddings Test
-    else {
-      $selectedTable = $tablesList[5]?.table_name;
-    }
     xMobile = isMobile();
   });
 </script>
 
-<div
-  class="content"
-  style:padding-left={xMobile ? "10px" : "4rem"}
-  style:padding-right={xMobile ? "10px" : "4rem"}
->
+<div class="content" style:padding-left="0.5rem" style:padding-right="0.5rem">
   {#if !xMobile || !$selectedTable}
     <DatabaseExplorer width={xMobile ? "100%" : "30%"} />
   {/if}
-  <div class="table" style:width={xMobile ? "100%" : "70%"}>
-    <div
-      style:display="flex"
-      style:justify-content="center"
-      style:border-radius="2rem"
-    >
-      {#if $selectedTable}
-        {#if columns.length > 0}
-          <DataGrid maxWidth="100%" {columns} />
-        {:else}
-          <p>No columns to display</p>
+  {#if (xMobile && $selectedTable) || !xMobile}
+    <div class="table" style:width={xMobile ? "100%" : "70%"}>
+      <div
+        style:display="flex"
+        style:justify-content="center"
+        style:border-radius="2rem"
+      >
+        {#if $selectedTable}
+          {#if columns.length > 0}
+            <DataGrid maxWidth="100%" {columns} />
+          {:else}
+            <p>No columns to display</p>
+          {/if}
         {/if}
-      {/if}
+      </div>
     </div>
-  </div>
+  {/if}
 </div>
 
 <style>

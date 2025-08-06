@@ -39,7 +39,7 @@
 
 <style>
   .logo {
-    margin-left: 0.5rem;
+    margin-left: -0.22rem;
     width: 3rem;
     height: 3rem;
     transition: transform 0.5s;
