@@ -11,6 +11,8 @@
   } from "$lib/stores/databaseExplorerStore";
   import { isMobile } from "svelte-elegant/utils";
 
+  export let width = "30%";
+
   let isOpenModal = false;
 
   onMount(() => {
@@ -18,7 +20,7 @@
   });
 </script>
 
-<div class="menu">
+<div class="menu" style:width>
   <Modal bind:isOpen={isOpenModal}>
     <div>
       <p>Name</p>
@@ -58,7 +60,7 @@
 
   <Button
     marginTop="0.5rem"
-    width="15rem"
+    width="100%"
     variant="Outlined"
     onClick={() => {
       isOpenModal = true;

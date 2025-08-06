@@ -15,7 +15,7 @@
 
   let columnsList = {};
   let columns = [];
-  let isMobileX = false;
+  let xMobile = false;
 
   // Подписка на изменения selectedTable
   selectedTable.subscribe(async (table) => {
@@ -36,20 +36,23 @@
     columnsList = await PostgresProvider.getColumnsList($selectedTable);
     columns = columnsUtils.columnsListToColumns(columns, columnsList);
     if (!isMobile()) $selectedTable = $tablesList[0]?.table_name || "";
-    isMobileX = isMobile();
+    //Paddings Test
+    else {
+      $selectedTable = $tablesList[5]?.table_name;
+    }
+    xMobile = isMobile();
   });
 </script>
 
-<div class="content">
-  {#if !isMobileX || !$selectedTable}
-    <DatabaseExplorer />
+<div
+  class="content"
+  style:padding-left={xMobile ? "10px" : "4rem"}
+  style:padding-right={xMobile ? "10px" : "4rem"}
+>
+  {#if !xMobile || !$selectedTable}
+    <DatabaseExplorer width={xMobile ? "100%" : "30%"} />
   {/if}
-  <div
-    class="table"
-    style:margin-left="1rem"
-    style:width="100%"
-    style:height="5rem"
-  >
+  <div class="table" style:width={xMobile ? "100%" : "70%"}>
     <div
       style:display="flex"
       style:justify-content="center"
@@ -57,7 +60,7 @@
     >
       {#if $selectedTable}
         {#if columns.length > 0}
-          <DataGrid {columns} />
+          <DataGrid maxWidth="100%" {columns} />
         {:else}
           <p>No columns to display</p>
         {/if}
@@ -70,7 +73,5 @@
   .content {
     display: flex;
     margin-top: 0.5rem;
-    padding-left: 4rem;
-    padding-right: 4rem;
   }
 </style>
