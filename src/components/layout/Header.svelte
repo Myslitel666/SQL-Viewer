@@ -1,5 +1,10 @@
 <script>
-  import { ColorThemeSwitch, Header, LangSelector } from "svelte-elegant";
+  import {
+    ColorThemeSwitch,
+    Header,
+    LangSelector,
+    ImageThemeTransition,
+  } from "svelte-elegant";
   import { themeStore } from "svelte-elegant/stores";
   import { languageStore } from "$lib/stores/language";
 
@@ -19,7 +24,11 @@
 <Header {...$$props}>
   <a href="/home" style:text-decoration="none">
     <button>
-      <img src="./USD-Coin-Logo-PNG-Color.png" class="logo" alt="logo" />
+      <ImageThemeTransition
+        size="2.75rem"
+        srcImages={["/large/light.png", "/large/dark.png"]}
+        transitionSeconds="0.25"
+      />
       <p class="logo-p">
         <span style:color={primary}> SQL Viewer </span>
       </p>
@@ -37,12 +46,6 @@
 </Header>
 
 <style>
-  .logo {
-    width: 3rem;
-    height: 3rem;
-    transition: transform 0.5s;
-  }
-
   .logo-p {
     margin-left: 0.25rem;
     font-size: 26px;
