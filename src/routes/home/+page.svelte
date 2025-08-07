@@ -1,10 +1,12 @@
 <script>
+  import { isMobile } from "svelte-elegant/utils";
   import { Button, DataGrid } from "svelte-elegant";
   import { PostgresProvider } from "$lib/providers/PostgresProvider";
   import DatabaseExplorer from "./DatabaseExplorer.svelte";
   import * as columnsUtils from "./columnsUtils";
   import Enter from "svelte-elegant/Enter";
   import { themeStore } from "svelte-elegant/stores";
+  import { xMobile } from "$lib/stores/xMobileStore";
 
   import {
     databaseName,
@@ -17,8 +19,8 @@
   let columnsList = {};
   let columns = [];
   let theme;
-  let xMobile = false;
   let xWindow;
+  let xMobileDevice = false;
 
   themeStore.subscribe((value) => {
     theme = value; //Инициализация объекта темы
@@ -43,42 +45,44 @@
     columnsList = await PostgresProvider.getColumnsList($selectedTable);
     columns = columnsUtils.columnsListToColumns(columns, columnsList);
 
+    xMobileDevice = isMobile();
+
     window.addEventListener("resize", updateXWindow); // При изменении высоты окна
     async function updateXWindow() {
       if (window.innerWidth) {
         xWindow = window.innerWidth;
 
-        if (xWindow > 750) xMobile = false;
-        else xMobile = true;
+        if (xWindow > 750) $xMobile = false;
+        else $xMobile = true;
 
-        if (!xMobile && !$selectedTable)
+        if (!$xMobile && !$selectedTable)
           $selectedTable = $tablesList[0]?.table_name || "";
       }
     }
 
     await updateXWindow();
-    if (!xMobile) $selectedTable = $tablesList[0]?.table_name || "";
+    if (!$xMobile) $selectedTable = $tablesList[0]?.table_name || "";
   });
 </script>
 
-<div class="content">
-  {#if !xMobile || !$selectedTable}
-    <DatabaseExplorer width={xMobile ? "100%" : "16rem"} />
+<div class="content" style:padding-right={xMobileDevice ? "1rem" : ""}>
+  {#if !$xMobile || !$selectedTable}
+    <DatabaseExplorer width={$xMobile ? "100%" : "16rem"} />
   {/if}
-  {#if (xMobile && $selectedTable) || !xMobile}
+  {#if ($xMobile && $selectedTable) || !$xMobile}
     <div class="table" style:display="flex" style:justify-content="center">
       <div
         style:border-radius="2rem"
         style:display="flex"
-        style:flex-direction={xMobile ? "column" : ""}
+        style:flex-direction={$xMobile ? "column" : ""}
         style:justify-content="center"
-        style:width={xMobile ? "" : "100%"}
-        style:max-width={xMobile ? "100%" : ""}
+        style:width={$xMobile ? "" : "100%"}
+        style:max-width={$xMobile ? "100%" : ""}
       >
         {#if $selectedTable}
-          {#if xMobile}
+          {#if $xMobile}
             <div
-              style:margin-top={xMobile ? "" : "0.5rem"}
+              style:margin-top={$xMobile ? "" : "0.5rem"}
               style:margin-bottom="0.25rem"
               style:display="flex"
               style:justify-content="center"

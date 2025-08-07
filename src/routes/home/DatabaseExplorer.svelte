@@ -3,7 +3,7 @@
   import { Button, Modal } from "svelte-elegant";
   import { DatabasePro, NotebookPro, Plus } from "svelte-elegant/icons-elegant";
   import { onMount } from "svelte";
-  import { isMobile } from "svelte-elegant/utils";
+  import { xMobile } from "$lib/stores/xMobileStore";
   import {
     databaseName,
     tablesList,
@@ -14,15 +14,13 @@
   export let width = "30%";
 
   let isOpenModal = false;
-  let xMobile;
 
   onMount(() => {
     databaseActions.loadDatabase();
-    xMobile = isMobile();
   });
 </script>
 
-<div class={xMobile ? "menu" : ""} style:width>
+<div class:menu={$xMobile} style:width>
   <Modal bind:isOpen={isOpenModal}>
     <div>
       <p>Name</p>
@@ -34,7 +32,7 @@
       class="datapase-pro"
       style:display="flex"
       style:align-items="center"
-      style:margin-left={xMobile ? "-2.5rem" : "0.1rem"}
+      style:margin-left={$xMobile ? "-2.5rem" : "0.1rem"}
     >
       <DatabasePro size="2.5rem" />
       <p style:font-weight="600">{$databaseName}</p>
@@ -45,7 +43,7 @@
         style:font-size="16px"
         style:display="flex"
         style:align-items="center"
-        style:margin-left={xMobile ? "" : "2.5rem"}
+        style:margin-left={$xMobile ? "" : "2.5rem"}
         style:margin-top="0.5rem"
         on:click={() => {
           databaseActions.loadTableColumns(table.table_name);
