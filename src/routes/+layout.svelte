@@ -5,10 +5,16 @@
 </script>
 
 <ThemeProvider>
+  <Header />
   <div class="app">
     <main>
-      <Header />
       <slot />
     </main>
   </div>
 </ThemeProvider>
+
+<style>
+  .app {
+    padding-left: 0.5rem;
+  }
+</style>

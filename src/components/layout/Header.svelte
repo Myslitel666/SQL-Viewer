@@ -29,8 +29,7 @@
     style:display="flex"
     style:align-items="center"
     style:margin-left="auto"
-    style:margin-right="1.5rem"
-    style:gap="0.5rem"
+    style:margin-right="1.88rem"
   >
     <LangSelector />
     <ColorThemeSwitch />
@@ -39,14 +38,13 @@
 
 <style>
   .logo {
-    margin-left: -0.22rem;
     width: 3rem;
     height: 3rem;
     transition: transform 0.5s;
   }
 
   .logo-p {
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
     font-size: 26px;
   }
 

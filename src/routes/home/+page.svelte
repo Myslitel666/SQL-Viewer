@@ -57,11 +57,12 @@
     <DatabaseExplorer width={xMobile ? "100%" : "16rem"} />
   {/if}
   {#if (xMobile && $selectedTable) || !xMobile}
-    <div class="table">
+    <div class="table" style:display="flex" style:justify-content="center">
       <div
+        style:border-radius="2rem"
         style:display="flex"
         style:justify-content="center"
-        style:border-radius="2rem"
+        style:width="100%"
       >
         {#if $selectedTable}
           {#if columns.length > 0}
@@ -78,31 +79,14 @@
 <style>
   .content {
     display: flex;
-    margin-top: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-top: 0.5rem;
   }
 
   .table {
-    width: 70%;
-    margin-left: 1rem;
-  }
-
-  @media (max-width: 900px) {
-    .table {
-      width: 62.5%;
-    }
-  }
-
-  @media (max-width: 750px) {
-    .table {
-      width: 100%;
-      margin-left: 0;
-    }
-
-    .content {
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-    }
+    /* Ключевые свойства для того, чтобы DataGrid анимал всё доступное пространство */
+    flex: 1;
+    min-width: 0;
+    /* *************************************************************************** */
+    padding-left: 0.5rem;
   }
 </style>
