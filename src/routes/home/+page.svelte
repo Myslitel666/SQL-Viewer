@@ -1,8 +1,10 @@
 <script>
-  import { DataGrid } from "svelte-elegant";
+  import { Button, DataGrid } from "svelte-elegant";
   import { PostgresProvider } from "$lib/providers/PostgresProvider";
   import DatabaseExplorer from "./DatabaseExplorer.svelte";
   import * as columnsUtils from "./columnsUtils";
+  import Enter from "svelte-elegant/Enter";
+  import { themeStore } from "svelte-elegant/stores";
 
   import {
     databaseName,
@@ -14,9 +16,13 @@
 
   let columnsList = {};
   let columns = [];
+  let theme;
   let xMobile = false;
-
   let xWindow;
+
+  themeStore.subscribe((value) => {
+    theme = value; //Инициализация объекта темы
+  });
 
   // Подписка на изменения selectedTable
   selectedTable.subscribe(async (table) => {
@@ -36,9 +42,6 @@
     );
     columnsList = await PostgresProvider.getColumnsList($selectedTable);
     columns = columnsUtils.columnsListToColumns(columns, columnsList);
-    if (!xMobile) $selectedTable = $tablesList[0]?.table_name || "";
-
-    console.log(xMobile);
 
     window.addEventListener("resize", updateXWindow); // При изменении высоты окна
     async function updateXWindow() {
@@ -47,8 +50,14 @@
 
         if (xWindow > 750) xMobile = false;
         else xMobile = true;
+
+        if (!xMobile && !$selectedTable)
+          $selectedTable = $tablesList[0]?.table_name || "";
       }
     }
+
+    await updateXWindow();
+    if (!xMobile) $selectedTable = $tablesList[0]?.table_name || "";
   });
 </script>
 
@@ -61,10 +70,41 @@
       <div
         style:border-radius="2rem"
         style:display="flex"
+        style:flex-direction={xMobile ? "column" : ""}
         style:justify-content="center"
-        style:width="100%"
+        style:width={xMobile ? "" : "100%"}
+        style:max-width={xMobile ? "100%" : ""}
       >
         {#if $selectedTable}
+          {#if xMobile}
+            <div
+              style:margin-top={xMobile ? "" : "0.5rem"}
+              style:margin-bottom="0.25rem"
+              style:display="flex"
+              style:justify-content="center"
+              style:align-items="center"
+              style:flex-direction="column"
+              style:gap="0.33rem"
+            >
+              <div>
+                <span style:font-weight="600" style:margin-right="0.25rem"
+                  >Table:</span
+                ><span>{$selectedTable}</span>
+              </div>
+              <Button
+                variant="Text"
+                marginBottom="0.25rem"
+                onClick={() => {
+                  $selectedTable = "";
+                }}
+              >
+                <div style:margin-left="-0.66rem" style:margin-top="0.25rem">
+                  <Enter fill={theme.palette.primary} size="2.25rem" />
+                </div>
+                Go back to the tables
+              </Button>
+            </div>
+          {/if}
           {#if columns.length > 0}
             <DataGrid maxWidth="100%" {columns} />
           {:else}

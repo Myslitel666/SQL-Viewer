@@ -29,12 +29,12 @@
     </div>
   </Modal>
 
-  <div>
+  <div style:justify-content="center">
     <div
       class="datapase-pro"
       style:display="flex"
       style:align-items="center"
-      style:margin-left={xMobile ? "-2.5rem" : ""}
+      style:margin-left={xMobile ? "-2.5rem" : "0.1rem"}
     >
       <DatabasePro size="2.5rem" />
       <p style:font-weight="600">{$databaseName}</p>
@@ -80,11 +80,6 @@
 </div>
 
 <style>
-  @media (max-width: 750px) {
-    .datapase-pro {
-    }
-  }
-
   .menu {
     display: flex;
     flex-direction: column;
