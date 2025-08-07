@@ -3,7 +3,6 @@
   import { PostgresProvider } from "$lib/providers/PostgresProvider";
   import DatabaseExplorer from "./DatabaseExplorer.svelte";
   import * as columnsUtils from "./columnsUtils";
-  import { isMobile } from "svelte-elegant/utils";
 
   import {
     databaseName,
@@ -37,20 +36,24 @@
     );
     columnsList = await PostgresProvider.getColumnsList($selectedTable);
     columns = columnsUtils.columnsListToColumns(columns, columnsList);
-    if (!isMobile()) $selectedTable = $tablesList[0]?.table_name || "";
-    xMobile = isMobile();
+    if (!xMobile) $selectedTable = $tablesList[0]?.table_name || "";
+
+    console.log(xMobile);
 
     window.addEventListener("resize", updateXWindow); // При изменении высоты окна
     async function updateXWindow() {
       if (window.innerWidth) {
         xWindow = window.innerWidth;
+
+        if (xWindow > 750) xMobile = false;
+        else xMobile = true;
       }
     }
   });
 </script>
 
 <div class="content">
-  {#if xWindow > 750 || !$selectedTable}
+  {#if !xMobile || !$selectedTable}
     <DatabaseExplorer width={xMobile ? "100%" : "16rem"} />
   {/if}
   {#if (xMobile && $selectedTable) || !xMobile}
