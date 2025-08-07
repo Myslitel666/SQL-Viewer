@@ -1,16 +1,18 @@
 <script>
-  import { ThemeProvider } from "svelte-elegant";
+  import { ThemeProvider, ScrollbarContainer } from "svelte-elegant";
 
   import Header from "../components/layout/Header.svelte";
 </script>
 
+<Header height="3.5rem" />
 <ThemeProvider>
-  <Header />
-  <div class="app">
-    <main>
-      <slot />
-    </main>
-  </div>
+  <ScrollbarContainer>
+    <div class="app">
+      <main>
+        <slot />
+      </main>
+    </div>
+  </ScrollbarContainer>
 </ThemeProvider>
 
 <style>

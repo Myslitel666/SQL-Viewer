@@ -16,7 +16,7 @@
   $: primary = theme?.palette.primary;
 </script>
 
-<Header>
+<Header {...$$props}>
   <a href="/home" style:text-decoration="none">
     <button>
       <img src="./USD-Coin-Logo-PNG-Color.png" class="logo" alt="logo" />
@@ -29,9 +29,9 @@
     style:display="flex"
     style:align-items="center"
     style:margin-left="auto"
-    style:margin-right="1.88rem"
+    style:margin-right="0.25rem"
   >
-    <LangSelector />
+    <LangSelector marginRight="0.25rem" />
     <ColorThemeSwitch />
   </div>
 </Header>
