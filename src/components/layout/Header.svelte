@@ -26,7 +26,7 @@
     <button>
       <ImageThemeTransition
         size="2.75rem"
-        srcImages={["/large/light.png", "/large/dark.png"]}
+        srcImages={["/light.png", "/dark.png"]}
         transitionSeconds="0.25"
       />
       <p class="logo-p">

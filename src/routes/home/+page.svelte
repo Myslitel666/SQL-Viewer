@@ -4,7 +4,7 @@
   import { PostgresProvider } from "$lib/providers/PostgresProvider";
   import DatabaseExplorer from "./DatabaseExplorer.svelte";
   import * as columnsUtils from "./columnsUtils";
-  import Enter from "svelte-elegant/Enter";
+  import { GoBack } from "svelte-elegant/icons-elegant";
   import { themeStore } from "svelte-elegant/stores";
   import { xMobile } from "$lib/stores/xMobileStore";
 
@@ -90,23 +90,26 @@
               style:flex-direction="column"
               style:gap="0.33rem"
             >
-              <div>
-                <span style:font-weight="600" style:margin-right="0.25rem"
-                  >Table:</span
-                ><span>{$selectedTable}</span>
-              </div>
               <Button
                 variant="Text"
-                marginBottom="0.25rem"
                 onClick={() => {
                   $selectedTable = "";
                 }}
               >
-                <div style:margin-left="-0.66rem" style:margin-top="0.25rem">
-                  <Enter fill={theme.palette.primary} size="2.25rem" />
+                <div
+                  style:margin-left="-0.25rem"
+                  style:margin-right="0.25rem"
+                  style:margin-top="0.25rem"
+                >
+                  <GoBack size="1.75rem" />
                 </div>
                 Go back to the tables
               </Button>
+              <div style:margin-bottom="0.25rem">
+                <span style:font-weight="600" style:margin-right="0.25rem"
+                  >Table:</span
+                ><span>{$selectedTable}</span>
+              </div>
             </div>
           {/if}
           {#if columns.length > 0}
